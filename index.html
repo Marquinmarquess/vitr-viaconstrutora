@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vitrúvia Construtora</title>
+<meta name="description" content="Gestão de obras de alto padrão em Brasília. Planejamento, construção, execução e acompanhamento da sua obra pelo app.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"GeneralContractor","name":"Vitrúvia Construtora","description":"Gestão de obras de alto padrão em Brasília","areaServed":"Distrito Federal","address":{"@type":"PostalAddress","addressLocality":"Brasília","addressRegion":"DF","addressCountry":"BR"},"sameAs":["https://www.instagram.com/construtoravitruvia/"]}
+</script>
+<style>
+:root{
+  --papel:#EFEEEB; --concreto:#DCDBD7; --cimento:#9C9E9D; --grafite:#202427;
+  --tinta:#202427; --suave:#5C6164; --tijolo:#8A3A2D; --tijolo-claro:#B4594A;
+  --vidro:#9FB4BC; --agua:#7FA9B5; --verde:#7E8C6A; --linha:rgba(32,36,39,.16);
+  --fundo:var(--papel);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --papel:#191C1E; --concreto:#25292C; --cimento:#6E7376; --grafite:#0F1213;
+    --tinta:#E8E6E2; --suave:#A3A7A9; --tijolo:#C8644F; --tijolo-claro:#DB846F;
+    --vidro:#5E7780; --agua:#4C7B88; --verde:#5F6E50; --linha:rgba(232,230,226,.14);
+  }
+}
+:root[data-theme="dark"]{
+  --papel:#191C1E; --concreto:#25292C; --cimento:#6E7376; --grafite:#0F1213;
+  --tinta:#E8E6E2; --suave:#A3A7A9; --tijolo:#C8644F; --tijolo-claro:#DB846F;
+  --vidro:#5E7780; --agua:#4C7B88; --verde:#5F6E50; --linha:rgba(232,230,226,.14);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--fundo);color:var(--tinta);font-family:"Jost",system-ui,sans-serif;font-weight:300;font-size:18px;line-height:1.6;overflow-x:hidden}
+a{color:inherit}
+img{max-width:100%;display:block}
+:focus-visible{outline:2px solid var(--tijolo);outline-offset:3px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-weight:200;line-height:1.08;letter-spacing:-.01em}
+h2{font-size:clamp(34px,5vw,58px);max-width:16ch}
+h3{font-size:24px;font-weight:300;line-height:1.25}
+p{max-width:62ch}
+.lead{font-size:20px;color:var(--suave);margin-top:20px}
+
+/* topo */
+.topo{position:fixed;inset:0 0 auto 0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:18px 24px;background:color-mix(in srgb,var(--fundo) 82%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.marca{display:flex;align-items:center;gap:12px;text-decoration:none}
+.marca svg{width:30px;height:30px}
+.marca span{font-weight:300;letter-spacing:.42em;font-size:15px}
+.topo nav{display:flex;gap:28px;font-size:15px}
+.topo nav a{text-decoration:none;color:var(--suave)}
+.topo nav a:hover{color:var(--tinta)}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 26px;border-radius:999px;background:var(--tijolo);color:#fff;text-decoration:none;font-weight:400;font-size:16px;border:0;cursor:pointer;transition:background .2s}
+.btn:hover{background:var(--tijolo-claro)}
+.btn.linha{background:transparent;color:var(--tinta);box-shadow:inset 0 0 0 1px var(--linha)}
+.btn.linha:hover{box-shadow:inset 0 0 0 1px var(--tinta)}
+.btn svg{width:18px;height:18px}
+
+/* hero com scroll */
+.obra{position:relative;height:560vh}
+.palco{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:grid;grid-template-columns:minmax(320px,38%) 1fr}
+.texto{position:relative;z-index:2;display:grid;align-items:center;padding:96px 24px 48px max(24px,calc((100vw - 1180px)/2 + 24px))}
+.camada{grid-area:1/1;transition:opacity .45s,transform .45s}
+.abertura h1{font-size:clamp(40px,4.4vw,68px)}
+.abertura p{margin-top:22px;color:var(--suave);font-size:19px;max-width:34ch}
+.abertura .acoes{margin-top:34px;display:flex;gap:12px;flex-wrap:wrap}
+.etapa-txt{opacity:0;transform:translateY(16px);pointer-events:none}
+.etapa-txt.ativa{opacity:1;transform:none}
+.etapa-txt .n{font-size:15px;color:var(--tijolo);font-weight:400}
+.etapa-txt h2{font-size:clamp(36px,4.4vw,60px);margin-top:10px}
+.etapa-txt p{margin-top:18px;color:var(--suave);max-width:34ch}
+.abertura.some{opacity:0;transform:translateY(-16px);pointer-events:none}
+.trilho{transition:opacity .3s;position:absolute;bottom:40px;left:max(24px,calc((100vw - 1180px)/2 + 24px));display:flex;gap:6px;z-index:3}
+.trilho i{display:block;width:44px;height:3px;background:var(--linha);position:relative;overflow:hidden;border-radius:2px}
+.trilho i b{position:absolute;inset:0;background:var(--tijolo);transform-origin:left;transform:scaleX(0)}
+.dica{position:absolute;bottom:34px;left:60%;font-size:14px;color:var(--suave);z-index:3;transition:opacity .3s}
+canvas#casa{width:100%;height:100%;display:block}
+.tela{position:relative}
+
+/* seções */
+section.bloco{padding:140px 0}
+.metodo{background:var(--concreto)}
+.passos{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:72px;border-top:1px solid var(--linha)}
+.passo{padding:32px 28px 8px 0}
+.passo + .passo{padding-left:28px;border-left:1px solid var(--linha)}
+.passo .n{font-size:46px;font-weight:200;color:var(--tijolo);line-height:1}
+.passo h3{margin-top:22px}
+.passo p{margin-top:12px;color:var(--suave);font-size:16px}
+
+.app{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.celular{justify-self:center;width:290px;aspect-ratio:9/19;border-radius:42px;background:var(--grafite);padding:12px;box-shadow:0 40px 80px -30px rgba(0,0,0,.35)}
+.celular .tela-app{width:100%;height:100%;border-radius:32px;background:var(--papel);padding:34px 20px;display:flex;flex-direction:column;gap:14px;overflow:hidden;color:var(--tinta)}
+.tela-app .t{font-size:13px;color:var(--suave)}
+.tela-app .g{font-size:22px;font-weight:300}
+.barra{height:6px;border-radius:3px;background:var(--linha);overflow:hidden}
+.barra b{display:block;height:100%;background:var(--tijolo)}
+.item-app{display:flex;justify-content:space-between;font-size:14px;padding:10px 0;border-bottom:1px solid var(--linha)}
+.item-app em{font-style:normal;color:var(--suave)}
+.foto-app{height:120px;border-radius:14px;background:repeating-linear-gradient(135deg,var(--concreto) 0 10px,var(--papel) 10px 20px);display:flex;align-items:end;padding:10px;font-size:12px;color:var(--suave)}
+.lista{margin-top:34px;list-style:none;display:grid;gap:18px}
+.lista li{display:grid;grid-template-columns:28px 1fr;gap:12px;align-items:start}
+.lista li svg{width:22px;height:22px;margin-top:4px;stroke:var(--tijolo)}
+
+.obras-grid{display:grid;grid-template-columns:1.4fr 1fr;grid-template-rows:auto auto;gap:24px;margin-top:64px}
+.case{position:relative;display:block;text-decoration:none;border-radius:6px;overflow:hidden;background:var(--concreto);min-height:300px}
+.case:first-child{grid-row:span 2;min-height:640px}
+.case .foto{position:absolute;inset:0;background:repeating-linear-gradient(135deg,var(--concreto) 0 14px,color-mix(in srgb,var(--concreto) 70%,var(--papel)) 14px 28px)}
+.case .foto span{position:absolute;top:18px;left:18px;font-size:13px;color:var(--suave)}
+.case .info{position:absolute;left:0;right:0;bottom:0;padding:28px;background:linear-gradient(transparent,rgba(15,18,19,.78));color:#fff}
+.case .info small{font-size:14px;opacity:.8}
+.case .info h3{margin-top:4px}
+.case:hover .info h3{text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1px}
+
+.quem{display:grid;grid-template-columns:1fr 1.1fr;gap:80px;align-items:start}
+.nome-origem{font-size:clamp(28px,3.4vw,42px);font-weight:200;line-height:1.25;max-width:22ch}
+.socios{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:40px}
+.socio .retrato{aspect-ratio:4/5;border-radius:6px;background:var(--concreto);display:flex;align-items:end;padding:14px;font-size:13px;color:var(--suave)}
+.socio h3{margin-top:14px;font-size:20px}
+.socio p{font-size:15px;color:var(--suave)}
+
+.depo{background:var(--grafite);color:#E8E6E2}
+.depo .lead{color:#A3A7A9}
+.depos{display:grid;grid-template-columns:repeat(3,1fr);gap:48px;margin-top:64px}
+.depos blockquote{font-size:21px;font-weight:200;line-height:1.5;border-top:1px solid rgba(232,230,226,.2);padding-top:26px}
+.depos cite{display:block;margin-top:18px;font-style:normal;font-size:15px;color:#A3A7A9}
+
+.faq-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:80px}
+details{border-bottom:1px solid var(--linha)}
+summary{list-style:none;cursor:pointer;padding:24px 40px 24px 0;font-size:20px;font-weight:300;position:relative}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"";position:absolute;right:6px;top:50%;width:12px;height:12px;border-right:1.5px solid var(--tinta);border-bottom:1.5px solid var(--tinta);transform:translateY(-70%) rotate(45deg);transition:transform .25s}
+details[open] summary::after{transform:translateY(-30%) rotate(225deg)}
+details p{padding:0 0 26px;color:var(--suave)}
+
+.final{text-align:left;background:var(--tijolo);color:#fff;padding:120px 0}
+.final h2{max-width:18ch}
+.final p{color:rgba(255,255,255,.82);margin-top:20px;font-size:20px}
+.final .btn{background:#fff;color:var(--tijolo);margin-top:36px}
+.final .btn:hover{background:var(--papel)}
+
+footer{padding:56px 0;font-size:15px;color:var(--suave)}
+footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+
+.zap{position:fixed;right:20px;bottom:20px;z-index:30;width:58px;height:58px;border-radius:50%;background:#25D366;display:grid;place-items:center;box-shadow:0 10px 30px -8px rgba(0,0,0,.4)}
+.zap svg{width:30px;height:30px;fill:#fff}
+
+@media (max-width:900px){
+  .topo nav{display:none}
+  .palco{grid-template-columns:1fr;grid-template-rows:1fr 46%}
+  .tela{grid-row:1}
+  .texto{grid-row:2;align-items:start;padding:8px 16px 70px}
+  .abertura .btn.linha{display:none}
+  .abertura h1{font-size:40px}
+  .abertura p{font-size:17px;margin-top:12px}
+  .abertura .acoes{margin-top:20px}
+  .etapa-txt h2{font-size:34px}
+  .etapa-txt p{font-size:16px;margin-top:10px}
+  .trilho{left:16px;bottom:24px}
+  .trilho i{width:34px}
+  .dica{display:none}
+  .wrap{padding:0 16px}
+  section.bloco{padding:96px 0}
+  .passos{grid-template-columns:1fr 1fr}
+  .passo:nth-child(3){padding-left:0;border-left:0}
+  .app,.quem,.faq-grid{grid-template-columns:1fr;gap:56px}
+  .obras-grid{grid-template-columns:1fr}
+  .case:first-child{grid-row:auto;min-height:420px}
+  .depos{grid-template-columns:1fr;gap:36px}
+}
+@media (max-width:520px){
+  .passos{grid-template-columns:1fr}
+  .passo + .passo{padding-left:0;border-left:0;border-top:1px solid var(--linha)}
+  .socios{grid-template-columns:1fr 1fr;gap:14px}
+  .marca span{letter-spacing:.3em;font-size:13px}
+  .topo .btn{padding:10px 16px;font-size:14px}
+}
+@media (prefers-reduced-motion:reduce){
+  .camada{transition:none}
+}
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <a class="marca" href="#inicio" aria-label="Vitrúvia Construtora, início">
+    <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 6v14c0 7 6 13 13 13s13-6 13-13V6"/><path d="M7 6l13 22L33 6"/><path d="M20 6v22"/></svg>
+    <span>VITRÚVIA</span>
+  </a>
+  <nav aria-label="Principal">
+    <a href="#metodo">Método</a><a href="#app">App da obra</a><a href="#obras">Obras</a><a href="#quem">Quem somos</a><a href="#duvidas">Dúvidas</a>
+  </nav>
+  <a class="btn" data-zap="geral" href="#">Fale conosco</a>
+</header>
+
+<main id="inicio">
+<!-- HERO: a casa se constrói conforme o scroll -->
+<section class="obra" aria-label="Como construímos sua casa">
+  <div class="palco">
+    <div class="texto">
+      <div class="camada abertura" id="abertura">
+        <h1>Sua casa em Brasília, construída com método.</h1>
+        <p>Gestão de obras de alto padrão, do projeto à entrega das chaves, com cada etapa acompanhada por você no celular.</p>
+        <div class="acoes">
+          <a class="btn" data-zap="hero" href="#">Quero planejar minha obra</a>
+          <a class="btn linha" href="#obras">Ver obras</a>
+        </div>
+      </div>
+      <div class="camada etapa-txt" data-etapa="0"><span class="n">Etapa 1 de 5</span><h2>Planejamento</h2><p>Antes da primeira estaca, a obra inteira já existe no papel: projeto, orçamento e cronograma aprovados por você.</p></div>
+      <div class="camada etapa-txt" data-etapa="1"><span class="n">Etapa 2 de 5</span><h2>Fundação</h2><p>Gabarito, escavação e vigas baldrame concretadas com controle técnico. É o que ninguém vê e o que segura tudo.</p></div>
+      <div class="camada etapa-txt" data-etapa="2"><span class="n">Etapa 3 de 5</span><h2>Estrutura</h2><p>Pilares, vigas e lajes. Cada concretagem é registrada e enviada para você no app no mesmo dia.</p></div>
+      <div class="camada etapa-txt" data-etapa="3"><span class="n">Etapa 4 de 5</span><h2>Fechamento</h2><p>Alvenaria, instalações e esquadrias. A casa ganha forma e você acompanha o andamento e os gastos de cada etapa.</p></div>
+      <div class="camada etapa-txt" data-etapa="4"><span class="n">Etapa 5 de 5</span><h2>Entrega</h2><p>Acabamentos, paisagismo e vistoria final. Você recebe a chave da casa que aprovou no começo.</p>
+        <div class="acoes" style="margin-top:26px"><a class="btn" data-zap="hero-final" href="#">Começar o meu projeto</a></div></div>
+      <div class="trilho" aria-hidden="true"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
+    </div>
+    <div class="tela"><canvas id="casa" role="img" aria-label="Ilustração de uma casa sendo construída etapa por etapa"></canvas></div>
+    <div class="dica" id="dica">Role para construir</div>
+  </div>
+</section>
+
+<section class="bloco metodo" id="metodo">
+  <div class="wrap">
+    <h2>Obra boa começa muito antes da execução.</h2>
+    <p class="lead">Obra que atrasa e orçamento que estoura quase sempre começam no mesmo lugar: falta de planejamento. Por isso trabalhamos com um método em quatro etapas, e você sabe o que acontece em cada uma.</p>
+    <div class="passos">
+      <div class="passo"><div class="n">1</div><h3>Planejar</h3><p>Compatibilização de projetos, orçamento detalhado e cronograma físico-financeiro antes de qualquer gasto na obra.</p></div>
+      <div class="passo"><div class="n">2</div><h3>Construir</h3><p>Equipe própria e fornecedores selecionados, com engenheiro responsável presente no canteiro.</p></div>
+      <div class="passo"><div class="n">3</div><h3>Executar</h3><p>Controle de qualidade em cada etapa crítica: fundação, concretagem, impermeabilização e acabamentos.</p></div>
+      <div class="passo"><div class="n">4</div><h3>Acompanhar</h3><p>Relatórios, fotos e gastos no app. Você decide com informação, não com surpresa.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="bloco" id="app">
+  <div class="wrap app">
+    <div>
+      <h2>Sua obra no bolso, todos os dias.</h2>
+      <p class="lead">Quem constrói em Brasília e trabalha o dia inteiro não consegue ir ao canteiro toda semana. Com o app da Vitrúvia, você não precisa.</p>
+      <ul class="lista">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4 12l5 5L20 6"/></svg><span>Fotos e vídeos da obra com data, enviados pela equipe</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4 12l5 5L20 6"/></svg><span>Andamento de cada etapa comparado ao cronograma</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4 12l5 5L20 6"/></svg><span>Gastos lançados e previsão do que vem pela frente</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4 12l5 5L20 6"/></svg><span>Contato direto com o engenheiro responsável</span></li>
+      </ul>
+      <a class="btn" style="margin-top:40px" data-zap="app" href="#">Quero acompanhar minha obra assim</a>
+    </div>
+    <!-- Trocar pelo print real do app quando o cliente enviar -->
+    <div class="celular" aria-label="Exemplo da tela do app de acompanhamento">
+      <div class="tela-app">
+        <div class="t">Casa Lago Sul</div>
+        <div class="g">Estrutura</div>
+        <div class="barra"><b style="width:62%"></b></div>
+        <div class="t">62% concluído · dentro do prazo</div>
+        <div class="foto-app">Foto da concretagem</div>
+        <div class="item-app"><span>Laje do pavimento superior</span><em>Concluída</em></div>
+        <div class="item-app"><span>Pilares do 2º pavimento</span><em>Em andamento</em></div>
+        <div class="item-app"><span>Alvenaria térreo</span><em>Próxima</em></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bloco" id="obras" style="padding-top:40px">
+  <div class="wrap">
+    <h2>Obras que estamos construindo.</h2>
+    <p class="lead">Cada obra tem sua página, com as etapas, as fotos e o que o cliente precisava resolver.</p>
+    <div class="obras-grid">
+      <a class="case" href="#" data-zap="obra-park"><div class="foto"><span>Foto da obra concluída</span></div><div class="info"><small>Park Way</small><h3>Obra Park Way</h3></div></a>
+      <a class="case" href="#" data-zap="obra-duraes"><div class="foto"><span>Foto da obra concluída</span></div><div class="info"><small>Brasília</small><h3>Residência Durães</h3></div></a>
+      <a class="case" href="#" data-zap="obra-guara"><div class="foto"><span>Foto da obra concluída</span></div><div class="info"><small>Guará</small><h3>Casa Guará</h3></div></a>
+    </div>
+  </div>
+</section>
+
+<section class="bloco metodo" id="quem">
+  <div class="wrap quem">
+    <div>
+      <h2>Quem está por trás da sua obra.</h2>
+      <p class="nome-origem" style="margin-top:40px">O nome vem de Vitrúvio, o arquiteto romano que definiu os três pilares de toda boa construção: solidez, utilidade e beleza.</p>
+    </div>
+    <div>
+      <p class="lead" style="margin-top:0">A Vitrúvia nasceu para resolver o que mais tira o sono de quem constrói: não saber o que está acontecendo na própria obra. Engenharia no canteiro, gestão no escritório e transparência com o cliente.</p>
+      <div class="socios">
+        <div class="socio"><div class="retrato">Foto</div><h3>Felipe Reis</h3><p>Sócio</p></div>
+        <div class="socio"><div class="retrato">Foto</div><h3>Nome do engenheiro</h3><p>Engenheiro civil · CREA 00000/D-DF</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bloco depo" aria-label="Depoimentos">
+  <div class="wrap">
+    <h2>Quem já construiu com a gente.</h2>
+    <p class="lead">Depoimentos reais dos nossos clientes.</p>
+    <div class="depos">
+      <blockquote>Texto do depoimento do cliente, como foi enviado no destaque do Instagram.<cite>Nome do cliente · Região</cite></blockquote>
+      <blockquote>Texto do depoimento do cliente, como foi enviado no destaque do Instagram.<cite>Nome do cliente · Região</cite></blockquote>
+      <blockquote>Texto do depoimento do cliente, como foi enviado no destaque do Instagram.<cite>Nome do cliente · Região</cite></blockquote>
+    </div>
+  </div>
+</section>
+
+<section class="bloco" id="duvidas">
+  <div class="wrap faq-grid">
+    <div><h2>Dúvidas frequentes.</h2><p class="lead">Não encontrou a sua? Pergunte direto para a nossa equipe no WhatsApp.</p></div>
+    <div>
+      <details><summary>Em quais regiões vocês constroem?</summary><p>Atendemos Brasília e o Distrito Federal, incluindo Lago Sul, Lago Norte, Park Way, Jardim Botânico, Guará e Águas Claras.</p></details>
+      <details><summary>Já tenho o projeto. Vocês executam?</summary><p>Sim. Analisamos e compatibilizamos o seu projeto antes de orçar, para evitar retrabalho e custo inesperado durante a obra.</p></details>
+      <details><summary>Como funciona o orçamento?</summary><p>Fazemos uma conversa inicial, visitamos o terreno e entregamos um orçamento detalhado por etapa, com cronograma físico-financeiro.</p></details>
+      <details><summary>Consigo acompanhar a obra sem ir ao canteiro?</summary><p>Sim. Pelo app você vê fotos, andamento de cada etapa e os gastos lançados, e fala direto com o engenheiro responsável.</p></details>
+      <details><summary>Quem é o responsável técnico pela obra?</summary><p>Toda obra tem engenheiro civil responsável, com ART registrada no CREA-DF.</p></details>
+      <details><summary>Vocês fazem reformas?</summary><p>Fazemos reformas de alto padrão e ampliações, com o mesmo método de planejamento e acompanhamento das obras novas.</p></details>
+      <details><summary>Quanto tempo leva para construir uma casa?</summary><p>Depende do tamanho e do projeto. O prazo exato sai no cronograma, antes do início da obra, e é acompanhado semana a semana no app.</p></details>
+      <details><summary>Vocês ajudam com aprovação na administração regional?</summary><p>Orientamos sobre a documentação e trabalhamos junto com o seu arquiteto para que a obra comece regularizada.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="wrap">
+    <h2>Seu terreno já pode virar endereço.</h2>
+    <p>Conte para a gente o que você quer construir. A primeira conversa é sem compromisso.</p>
+    <a class="btn" data-zap="final" href="#">Falar com a Vitrúvia no WhatsApp</a>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Vitrúvia Construtora · Brasília, DF · CNPJ 00.000.000/0001-00</span>
+    <span><a href="https://www.instagram.com/construtoravitruvia/" target="_blank" rel="noopener">Instagram</a> · <a href="#">Política de privacidade</a></span>
+  </div>
+</footer>
+
+<a class="zap" data-zap="flutuante" href="#" aria-label="Conversar no WhatsApp"><svg viewBox="0 0 32 32"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.6c-2 0-4-.6-5.7-1.6l-.4-.2-3.9 1 1-3.8-.3-.4A10.6 10.6 0 1 1 16 26.6zm5.8-7.9c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1a8.7 8.7 0 0 1-4.3-3.8c-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.5c.2.2 2.4 3.7 5.8 5.1 2.2.9 3 1 4.1.8.7-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4z"/></svg></a>
+
+<script>
+/* ===== WhatsApp: número oficial + mensagens por origem + UTM ===== */
+const ZAP_NUMERO = "5561900000000"; // TROCAR pelo número oficial da Vitrúvia
+const ZAP_MSG = {
+  geral:"Olá! Vim pelo site da Vitrúvia e quero conversar sobre uma obra.",
+  hero:"Olá! Vim pelo site e quero planejar a construção da minha casa.",
+  "hero-final":"Olá! Vi como funciona o método de vocês no site e quero começar meu projeto.",
+  app:"Olá! Vi no site o app de acompanhamento de obra e quero saber mais.",
+  "obra-park":"Olá! Vi a obra do Park Way no site e quero conversar sobre a minha.",
+  "obra-duraes":"Olá! Vi a Residência Durães no site e quero conversar sobre a minha obra.",
+  "obra-guara":"Olá! Vi a obra do Guará no site e quero conversar sobre a minha.",
+  final:"Olá! Quero conversar sobre a minha obra.",
+  flutuante:"Olá! Vim pelo site da Vitrúvia."
+};
+(function(){
+  let q={}; try{ new URLSearchParams(location.search).forEach((v,k)=>{ if(k.startsWith("utm_")) q[k]=v; }); }catch(e){}
+  const origem = q.utm_source ? ` [${q.utm_source}${q.utm_campaign?"/"+q.utm_campaign:""}]` : "";
+  document.querySelectorAll("[data-zap]").forEach(a=>{
+    const k=a.dataset.zap, msg=(ZAP_MSG[k]||ZAP_MSG.geral)+origem;
+    a.href=`https://wa.me/${ZAP_NUMERO}?text=${encodeURIComponent(msg)}`;
+    a.target="_blank"; a.rel="noopener";
+    a.addEventListener("click",()=>{ try{ (window.dataLayer=window.dataLayer||[]).push({event:"clique_whatsapp",origem:k,...q}); }catch(e){} });
+  });
+})();
+
+/* ===== HERO: a casa se constrói com o scroll =====
+   Modo "desenho": casa em traço arquitetônico (atual).
+   Modo "frames": quando houver o vídeo do Higgsfield, extrair os quadros para /frames/ e
+   definir HERO_FRAMES = {total: 120, src: i => `frames/f${String(i).padStart(3,"0")}.jpg`} */
+const HERO_FRAMES = null;
+
+const cv=document.getElementById("casa"), cx=cv.getContext("2d");
+const secao=document.querySelector(".obra");
+const abertura=document.getElementById("abertura");
+const etapas=[...document.querySelectorAll(".etapa-txt")];
+const trilho=[...document.querySelectorAll(".trilho b")];
+const dica=document.getElementById("dica");
+const reduz=matchMedia("(prefers-reduced-motion: reduce)").matches;
+let W=0,H=0,DPR=1,alvo=0,atual=0,cores={};
+
+function lerCores(){
+  const s=getComputedStyle(document.documentElement), g=n=>s.getPropertyValue(n).trim();
+  cores={tinta:g("--tinta"),suave:g("--suave"),cimento:g("--cimento"),concreto:g("--concreto"),papel:g("--papel"),tijolo:g("--tijolo"),vidro:g("--vidro"),agua:g("--agua"),verde:g("--verde")};
+}
+function medir(){
+  const r=cv.getBoundingClientRect(); DPR=Math.min(2,devicePixelRatio||1);
+  W=r.width; H=r.height; cv.width=W*DPR; cv.height=H*DPR; cx.setTransform(DPR,0,0,DPR,0,0);
+}
+const cl=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
+const fase=(p,a,b)=>cl((p-a)/(b-a));
+const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+
+/* projeção isométrica: lote 30 x 20 m */
+let S=1,OX=0,OY=0;
+function enquadrar(){
+  const c30=Math.cos(Math.PI/6), s30=.5;
+  const pts=[[0,0,0],[30,0,0],[0,20,0],[30,20,0],[0,0,8],[30,0,8]];
+  let mnx=1e9,mxx=-1e9,mny=1e9,mxy=-1e9;
+  pts.forEach(([x,y,z])=>{const X=(x-y)*c30,Y=(x+y)*s30-z;mnx=Math.min(mnx,X);mxx=Math.max(mxx,X);mny=Math.min(mny,Y);mxy=Math.max(mxy,Y);});
+  const mob=W<700, padX=mob?16:40, padTop=mob?70:110, padBot=mob?10:70;
+  S=Math.min((W-padX*2)/(mxx-mnx),(H-padTop-padBot)/(mxy-mny));
+  OX=padX+((W-padX*2)-(mxx-mnx)*S)/2-mnx*S;
+  OY=padTop+((H-padTop-padBot)-(mxy-mny)*S)/2-mny*S;
+}
+function P(x,y,z){return[OX+(x-y)*0.8660254*S, OY+((x+y)*.5-z)*S];}
+
+function poli(pts,{fill,fa=1,stroke,lw=1,t=1,dash}){
+  if(t<=0) return;
+  cx.beginPath(); pts.forEach((p,i)=>{const q=P(...p); i?cx.lineTo(...q):cx.moveTo(...q);}); cx.closePath();
+  if(fill){cx.globalAlpha=fa*t; cx.fillStyle=fill; cx.fill(); cx.globalAlpha=1;}
+  if(stroke){
+    let per=0; for(let i=0;i<pts.length;i++){const a=P(...pts[i]),b=P(...pts[(i+1)%pts.length]);per+=Math.hypot(b[0]-a[0],b[1]-a[1]);}
+    cx.strokeStyle=stroke; cx.lineWidth=lw;
+    cx.setLineDash(dash||(t<1?[per*t,per]:[])); cx.stroke(); cx.setLineDash([]);
+  }
+}
+function linha(a,b,{stroke,lw=1,t=1,dash}){
+  if(t<=0) return; const A=P(...a),B=P(...b);
+  cx.beginPath(); cx.moveTo(...A); cx.lineTo(A[0]+(B[0]-A[0])*t,A[1]+(B[1]-A[1])*t);
+  cx.strokeStyle=stroke; cx.lineWidth=lw; cx.setLineDash(dash||[]); cx.stroke(); cx.setLineDash([]);
+}
+/* caixa: desenha faces visíveis (topo, x+ e y+) */
+function caixa(x0,x1,y0,y1,z0,z1,o){
+  const t=o.t??1; if(t<=0) return;
+  if(o.cresce) z1=z0+(z1-z0)*ease(t);
+  const tf=o.cresce?1:t;
+  const st=o.stroke, lw=o.lw||1;
+  poli([[x1,y0,z0],[x1,y1,z0],[x1,y1,z1],[x1,y0,z1]],{fill:o.ladoX||o.fill,fa:o.fa??1,stroke:st,lw,t:tf});
+  poli([[x0,y1,z0],[x1,y1,z0],[x1,y1,z1],[x0,y1,z1]],{fill:o.ladoY||o.fill,fa:o.fa??1,stroke:st,lw,t:tf});
+  poli([[x0,y0,z1],[x1,y0,z1],[x1,y1,z1],[x0,y1,z1]],{fill:o.topo||o.fill,fa:o.fa??1,stroke:st,lw,t:tf});
+}
+function mistura(a,b,k){ // hex
+  const h=c=>{c=c.replace("#","");if(c.length===3)c=[...c].map(x=>x+x).join("");return[0,2,4].map(i=>parseInt(c.substr(i,2),16));};
+  try{const A=h(a),B=h(b);return"rgb("+A.map((v,i)=>Math.round(v+(B[i]-v)*k)).join(",")+")";}catch(e){return a;}
+}
+
+function desenhar(p){
+  cx.clearRect(0,0,W,H);
+  const C=cores, tr=C.tinta, fino=Math.max(.6,S*.045), medio=Math.max(1,S*.07);
+  const sombra=mistura(C.cimento,C.tinta,.35), luz=mistura(C.concreto,C.papel,.4);
+
+  /* 1. Planejamento: lote, grade de projeto e gabarito */
+  const tL=fase(p,-.1,.0001);
+  poli([[0,0,0],[30,0,0],[30,20,0],[0,20,0]],{stroke:C.suave,lw:fino,t:tL,dash:tL<1?null:[4,4]});
+  const tG=fase(p,-.1,0);
+  for(let x=2;x<30;x+=2) linha([x,0,0],[x,20,0],{stroke:C.cimento,lw:.5,t:tG*(1-fase(p,.3,.42)),dash:[2,4]});
+  for(let y=2;y<20;y+=2) linha([0,y,0],[30,y,0],{stroke:C.cimento,lw:.5,t:tG*(1-fase(p,.3,.42)),dash:[2,4]});
+  const tGab=fase(p,.1,.2), some=1-fase(p,.36,.44);
+  if(some>0){
+    [[4,4],[20,4],[20,14],[4,14],[24,3],[24,12]].forEach(([x,y],i)=>linha([x,y,0],[x,y,.9],{stroke:C.tijolo,lw:medio,t:fase(tGab,i*.08,i*.08+.4)*some}));
+    poli([[4,4,.8],[20,4,.8],[20,14,.8],[4,14,.8]],{stroke:C.tijolo,lw:fino,t:fase(tGab,.4,1)*some});
+  }
+
+  /* 2. Fundação: escavação + vigas baldrame em grade */
+  const tEsc=fase(p,.18,.26)*(1-fase(p,.4,.48));
+  poli([[3.6,3.6,0],[24.4,3.6,0],[24.4,14.4,0],[3.6,14.4,0]],{fill:mistura(C.concreto,C.tijolo,.25),fa:.55,t:tEsc});
+  const vx=[4,8,12,16,20,24], vy=[4,9,14], tVig=fase(p,.22,.38);
+  vy.forEach((y,i)=>caixa(4,y===14?20:24,y-.18,y+.18,-.5,0,{fill:C.cimento,topo:luz,ladoX:sombra,stroke:tr,lw:fino*.8,t:fase(tVig,i*.12,i*.12+.5)}));
+  vx.forEach((x,i)=>caixa(x-.18,x+.18,4,x===24?9:14,-.5,0,{fill:C.cimento,topo:luz,ladoX:sombra,stroke:tr,lw:fino*.8,t:fase(tVig,.25+i*.08,.55+i*.08)}));
+
+  /* contrapiso */
+  const tPiso=fase(p,.36,.44);
+  caixa(4,20,4,14,0,.15,{fill:C.concreto,topo:luz,ladoX:sombra,stroke:tr,lw:fino,t:tPiso});
+
+  /* 3. Estrutura: pilares térreo, laje 1, pilares superiores, laje de cobertura */
+  const pil=[]; [4,8,12,16,20].forEach(x=>[4,9,14].forEach(y=>pil.push([x,y]))); pil.push([24,4],[24,9]);
+  const tP1=fase(p,.42,.52);
+  pil.forEach(([x,y],i)=>caixa(x-.2,x+.2,y-.2,y+.2,.15,3.2,{fill:C.cimento,topo:luz,ladoX:sombra,stroke:tr,lw:fino*.8,t:fase(tP1,(i%6)*.06,(i%6)*.06+.6),cresce:true}));
+  const tL1=fase(p,.5,.57);
+  caixa(4,24,3,14,3.2,3.5,{fill:C.cimento,topo:luz,ladoX:sombra,ladoY:mistura(C.cimento,C.tinta,.2),stroke:tr,lw:fino,t:tL1});
+  const pil2=[[6,3],[12,3],[18,3],[24,3],[6,12],[12,12],[18,12],[24,12]];
+  const tP2=fase(p,.56,.63);
+  pil2.forEach(([x,y],i)=>caixa(x-.2,x+.2,y-.2,y+.2,3.5,6.5,{fill:C.cimento,topo:luz,ladoX:sombra,stroke:tr,lw:fino*.8,t:fase(tP2,(i%4)*.1,(i%4)*.1+.6),cresce:true}));
+  const tL2=fase(p,.62,.68);
+  caixa(5,25.5,2.4,12.6,6.5,6.8,{fill:C.cimento,topo:luz,ladoX:sombra,ladoY:mistura(C.cimento,C.tinta,.2),stroke:tr,lw:fino,t:tL2});
+
+  /* 4. Fechamento: alvenaria do térreo e volume superior em tijolo */
+  const tA1=fase(p,.66,.76);
+  if(tA1>0){
+    caixa(4,20,4,14,.15,3.2,{fill:C.concreto,ladoX:mistura(C.concreto,C.tinta,.12),ladoY:luz,topo:"rgba(0,0,0,0)",stroke:tr,lw:fino,t:tA1,fa:.95});
+    caixa(4,24,3,14,3.2,3.5,{fill:C.cimento,topo:luz,ladoX:sombra,ladoY:mistura(C.cimento,C.tinta,.2),stroke:tr,lw:fino});
+  }
+  const tA2=fase(p,.72,.82);
+  if(tA2>0){
+    caixa(6,24,3,12,3.5,6.5,{fill:C.tijolo,ladoX:mistura(C.tijolo,C.tinta,.25),ladoY:C.tijolo,stroke:tr,lw:fino,t:tA2,fa:.92});
+    // ripas verticais no volume superior
+    if(tA2>.6) for(let x=6.8;x<24;x+=.8) linha([x,12,3.5],[x,12,6.5],{stroke:mistura(C.tijolo,C.tinta,.3),lw:.6,t:fase(tA2,.6,1)});
+    caixa(5,25.5,2.4,12.6,6.5,6.8,{fill:C.cimento,topo:luz,ladoX:sombra,ladoY:mistura(C.cimento,C.tinta,.2),stroke:tr,lw:fino});
+  }
+
+  /* 5. Entrega: vidros, piscina, muro, jardim, árvores, luz */
+  const tV=fase(p,.82,.9);
+  if(tV>0){
+    poli([[6,14,.4],[18.5,14,.4],[18.5,14,3],[6,14,3]],{fill:C.vidro,fa:.85,stroke:tr,lw:fino,t:tV});
+    for(let x=8.5;x<18.5;x+=2.5) linha([x,14,.4],[x,14,3],{stroke:tr,lw:fino*.8,t:tV});
+    poli([[20,6,.4],[20,12.5,.4],[20,12.5,3],[20,6,3]],{fill:mistura(C.vidro,C.tinta,.15),fa:.85,stroke:tr,lw:fino,t:tV});
+    poli([[24,4.5,4],[24,10.5,4],[24,10.5,6],[24,4.5,6]],{fill:mistura(C.vidro,C.tinta,.2),fa:.9,stroke:tr,lw:fino,t:tV});
+  }
+  const tPisc=fase(p,.86,.93);
+  if(tPisc>0){
+    poli([[20.5,15,0],[29,15,0],[29,19,0],[20.5,19,0]],{fill:luz,fa:1,stroke:tr,lw:fino,t:tPisc});
+    poli([[21,15.5,0],[28.5,15.5,0],[28.5,18.5,0],[21,18.5,0]],{fill:C.agua,fa:.9,stroke:tr,lw:fino*.8,t:tPisc});
+  }
+  const tJ=fase(p,.88,.96);
+  if(tJ>0){
+    poli([[0,14.6,0],[20.4,14.6,0],[20.4,20,0],[0,20,0]],{fill:C.verde,fa:.28,t:tJ});
+    caixa(0,30,0,.25,0,1.8,{fill:C.concreto,ladoX:sombra,ladoY:luz,topo:luz,stroke:tr,lw:fino*.8,t:tJ});
+    caixa(0,.25,0,20,0,1.8,{fill:C.concreto,ladoX:luz,ladoY:sombra,topo:luz,stroke:tr,lw:fino*.8,t:tJ});
+  }
+  const tAr=fase(p,.92,1);
+  if(tAr>0){
+    [[2.5,17,3.4],[27,2.5,4.2],[2.5,3,3.8],[13,18,2.8],[28,9,3]].forEach(([x,y,h],i)=>{
+      const k=ease(fase(tAr,i*.12,i*.12+.5)); if(k<=0) return;
+      linha([x,y,0],[x,y,h*.55*k],{stroke:mistura(C.tinta,C.verde,.3),lw:medio});
+      const c=P(x,y,h*k*.85); cx.beginPath(); cx.arc(c[0],c[1],S*1.3*k,0,7);
+      cx.globalAlpha=.8; cx.fillStyle=C.verde; cx.fill(); cx.globalAlpha=1;
+      cx.strokeStyle=mistura(C.verde,C.tinta,.4); cx.lineWidth=fino; cx.stroke();
+    });
+  }
+}
+
+/* modo frames (vídeo realista do Higgsfield) */
+let quadros=null;
+if(HERO_FRAMES){
+  quadros=[]; for(let i=0;i<HERO_FRAMES.total;i++){const im=new Image(); im.src=HERO_FRAMES.src(i); quadros.push(im);}
+}
+function desenharFrame(p){
+  const i=Math.round(p*(quadros.length-1)), im=quadros[i];
+  if(!im||!im.complete||!im.naturalWidth) return;
+  const k=Math.max(W/im.naturalWidth,H/im.naturalHeight), w=im.naturalWidth*k, h=im.naturalHeight*k;
+  cx.clearRect(0,0,W,H); cx.drawImage(im,(W-w)/2,(H-h)/2,w,h);
+}
+
+function progresso(){
+  const r=secao.getBoundingClientRect(), total=secao.offsetHeight-innerHeight;
+  return cl(-r.top/total);
+}
+function atualizarTexto(p){
+  // 0–.06 abertura; depois etapas
+  abertura.classList.toggle("some",p>.05);
+  const lim=[.06,.18,.42,.66,.84,1.01];
+  let e=-1; for(let i=0;i<5;i++) if(p>=lim[i]&&p<lim[i+1]) e=i;
+  etapas.forEach((el,i)=>el.classList.toggle("ativa",i===e));
+  trilho.forEach((b,i)=>b.style.transform=`scaleX(${cl((p-lim[i])/(lim[i+1]-lim[i]))})`);
+  dica.style.opacity=p>.03?0:1;
+  document.querySelector('.trilho').style.opacity=p>.05?1:0;
+}
+function quadro(){
+  atual+= (alvo-atual)*(reduz?1:.14);
+  if(Math.abs(alvo-atual)<.0005) atual=alvo;
+  quadros?desenharFrame(atual):desenhar(atual);
+  if(atual!==alvo) requestAnimationFrame(quadro); else rodando=false;
+}
+let rodando=false;
+function pedir(){ alvo=progresso(); atualizarTexto(alvo); if(!rodando){rodando=true;requestAnimationFrame(quadro);} }
+function iniciar(){ lerCores(); medir(); enquadrar(); atual=alvo=progresso(); atualizarTexto(alvo); quadros?desenharFrame(atual):desenhar(atual); }
+addEventListener("scroll",pedir,{passive:true});
+addEventListener("resize",()=>{iniciar();});
+try{ matchMedia("(prefers-color-scheme: dark)").addEventListener("change",iniciar); }catch(e){}
+document.fonts?.ready.then(iniciar);
+iniciar();
+</script>
+</body>
+</html>
